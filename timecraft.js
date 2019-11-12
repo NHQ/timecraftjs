@@ -1,4 +1,4 @@
-var kernel_paths = ['/kernels/lsk/naif0012.tls','/kernels/spk/de425s.bsp','/kernels/pck/pck00010.tpc',];
+var kernel_paths = ['./kernels/lsk/naif0012.tls','./kernels/spk/de432s.bsp', './kernels/pck/pck00010.tpc',];
 var timecraftjs;
 //Load the required javascript files
 timecraftjs = {"is_ready":false};
@@ -6,8 +6,8 @@ timecraftjs = {"is_ready":false};
 //set up spice different ways depending on if in a browser or not
 if(typeof window == "undefined"){
 	//If in node
-    timecraft = require("timecraftjs/spice.js");
-	var cspice = require("timecraftjs/cspice.js");
+    timecraft = require("./spice.js");
+	var cspice = require("./cspice.js");
 	var fs = require("fs");
     timecraft.SPICE.setup(cspice,fs);
 	for(var i = 0;i < kernel_paths.length;i++){
