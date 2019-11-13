@@ -1458,19 +1458,20 @@ var SPICE = (function() {
 		},
  
     /*
-      spd: return ephemeride ofr target from observer at epoch
-      @memberof  SPICE
+      spd: return ephemeride of target from observer at epoch
+      @memberof SPICE
       @func spkezr_c
       @desc https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkezr_c.html
-      @returns {x, y, z, dz, dy, dz, lt}
+      @returns {x, y, z, dx, dy, dz, lt}
 
     */
 
     spkezr: function(target='399', epoch=null, obs='0', ref='J2000', corr='NONE'){
 			var lt = this.Module._malloc(integer_size);
 			var stvec = this.Module._malloc(48);
+
       if(epoch instanceof Date) epoch = this.date2et(epoch)
-      if(!epoch) epoch=this.date2et(new Date) 
+      if(!epoch) epoch = this.date2et(new Date) 
 
       this.Module.ccall(
         'spkezr_c', 
