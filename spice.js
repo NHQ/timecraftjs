@@ -1458,7 +1458,7 @@ var SPICE = (function() {
 		},
  
     /*
-      spd: return ephemeride of target from observer at epoch
+      spkezr: return ephemeride of target from observer at epoch
       @memberof SPICE
       @func spkezr_c
       @desc https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkezr_c.html
