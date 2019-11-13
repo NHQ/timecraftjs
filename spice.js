@@ -1456,6 +1456,39 @@ var SPICE = (function() {
 				[]
 			);
 		},
+ 
+    /*
+      spd: return ephemeride ofr target from observer at epoch
+      @memberof  SPICE
+      @func spkezr_c
+      @desc https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkezr_c.html
+      @returns {x, y, z, dz, dy, dz, lt}
+
+    */
+
+    spkezr: function(target='399', epoch=null, obs='0', ref='J2000', corr='NONE'){
+			var lt = this.Module._malloc(integer_size);
+			var stvec = this.Module._malloc(48);
+      if(epoch instanceof Date) epoch = this.date2et(epoch)
+      if(!epoch) epoch=this.date2et(new Date) 
+
+      this.Module.ccall(
+        'spkezr_c', 
+        null, 
+        ['string', 'number', 'string', 'string', 'string', 'number', 'number'],
+        [target, epoch, ref, corr, obs, stvec, lt]
+      )
+
+			var data = [];
+      data.push(this.Module.getValue(lt, 'double'))
+      for(var i = 0; i < 6; i++){
+			  data.push(this.Module.getValue(stvec+i*8, 'double'))
+      }
+      this.Module._free(lt);
+			this.Module._free(stvec);
+      
+      return {x:data[1], y:data[2], z:data[3], dx:data[4], dy:data[5], dz:data[6], lt: data[0]}
+    },
 
 		/*str2et:    Convert a string representing an epoch to a double precision
 		   value representing the number of TDB seconds past the J2000
